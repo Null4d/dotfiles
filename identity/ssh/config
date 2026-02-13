@@ -1,0 +1,37 @@
+# ssh client config
+
+# cryptography
+KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+HostKeyAlgorithms ssh-ed25519,rsa-sha2-512,rsa-sha2-256
+PubkeyAcceptedAlgorithms ssh-ed25519,rsa-sha2-512,rsa-sha2-256
+RequiredRSASize 3072
+
+# session
+ServerAliveInterval 60
+ServerAliveCountMax 10
+RekeyLimit 1G 1h
+
+# authentication
+PubkeyAuthentication yes
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+GSSAPIAuthentication no
+IdentitiesOnly yes
+AddKeysToAgent no
+
+# host verification
+StrictHostKeyChecking ask
+CheckHostIP yes
+HashKnownHosts yes
+VisualHostKey yes
+UpdateHostKeys yes
+
+# disable forwarding
+ForwardAgent no
+ForwardX11 no
+ForwardX11Trusted no
+HostbasedAuthentication no
+Tunnel no
+PermitLocalCommand no

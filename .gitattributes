@@ -1,0 +1,4 @@
+# Null4d - gitattributes
+
+* text=auto eol=lf
+*.md diff=markdown

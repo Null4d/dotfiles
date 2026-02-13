@@ -1,0 +1,16 @@
+# ripgrep config
+
+# include dotfiles
+--hidden
+
+# exclude .git
+--glob=!.git
+
+# smart case matching
+--smart-case
+
+# truncate long lines
+--max-columns=200
+
+# show matched fragment on truncated lines
+--max-columns-preview

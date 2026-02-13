@@ -1,0 +1,50 @@
+# functions
+
+# copy with progress
+cpv() {
+  rsync -a --no-i-r --info=progress2 "$@"
+}
+
+# mkdir and cd
+mkcd() { [[ -z "${1:-}" ]] && return 1; mkdir -p "$1" && cd "$1"; }
+
+# processes by memory
+psa() {
+  ps -ewwo rss,pid,user,command --sort=-rss | awk '
+    NR==1 { printf "%-10s %-8s %-12s %s\n", "MEMORY", "PID", "USER", "COMMAND"; next }
+    { cmd=""; for(i=4;i<=NF;i++) cmd=cmd (i>4?" ":"") $i
+      printf "%-10.1f MB %-8s %-12s %s\n", $1/1024, $2, $3, cmd }
+  ' | head -21
+}
+
+# seal history (tools without env variable support)
+seal-history() {
+  local targets=(
+    ~/.gore/history
+    ~/.config/evcxr/history.txt
+    ~/.irb_history
+    ~/.lldb/lldb-history
+    ~/.msf4/history
+    ~/.hashcat/hashcat.potfile
+    ~/.john/john.pot
+    ~/.nxc/.nxc_history
+    ~/bettercap.history
+    ~/.bun/repl_history                        # bun: undocumented
+    ~/.local/share/recently-used.xbel          # GNOME: file open/download history
+  )
+  for f in "${targets[@]}"; do
+    mkdir -p "$(dirname "$f")"
+    [[ -d "$f" && ! -L "$f" ]] && rm -rf -- "$f"
+    rm -f -- "$f" 2>/dev/null || true
+    ln -sfn /dev/null "$f" || { echo "  error: cannot seal $f" >&2; return 1; }
+  done
+  # radare2
+  if command -v r2 &>/dev/null; then
+    local r2rc="$HOME/.radare2rc"
+    if ! grep -q 'scr.histsave' "$r2rc" 2>/dev/null; then
+      echo 'e scr.histsave = false' >> "$r2rc"
+    fi
+  fi
+
+  echo "  sealed - all history files -> /dev/null"
+}

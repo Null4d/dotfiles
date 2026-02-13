@@ -1,0 +1,81 @@
+# git config
+
+[user]
+  name = Null4d
+  email = 102851315+Null4d@users.noreply.github.com
+  signingkey = 0xD5555B7F4FE233DB
+
+[init]
+  defaultBranch = main
+
+[core]
+  excludesfile = ~/.config/git/ignore
+  pager = delta
+  hooksPath = ~/.config/git/hooks
+
+# signing
+[commit]
+  gpgsign = true
+  verbose = true                      # show diff in commit msg editor
+
+[tag]
+  gpgsign = true
+  sort = version:refname              # semantic ordering
+
+[push]
+  autoSetupRemote = true
+
+[pull]
+  ff = only
+
+[merge]
+  conflictStyle = zdiff3
+
+[diff]
+  algorithm = histogram
+  colorMoved = true
+
+[rebase]
+  autoStash = true
+  autoSquash = true
+
+[rerere]
+  enabled = true
+
+[branch]
+  sort = -committerdate
+
+# integrity
+[transfer]
+  fsckObjects = true
+
+[fetch]
+  fsckObjects = true
+  prune = true
+  pruneTags = true
+
+[receive]
+  fsckObjects = true
+
+[credential "https://github.com"]
+  helper =
+  helper = !gh auth git-credential
+
+# delta (diff pager)
+[delta]
+  navigate = true
+  line-numbers = true
+  side-by-side = false
+  syntax-theme = base16
+
+[interactive]
+  diffFilter = delta --color-only
+
+[alias]
+  s = status -sb
+  l = log --oneline -20
+  d = diff
+  ds = diff --staged
+  dlog = -c diff.external=difft log -p --ext-diff
+  undo = reset HEAD~1 --mixed
+  amend = commit --amend --no-edit
