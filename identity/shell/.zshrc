@@ -1,30 +1,5 @@
 # zshrc
 
-# source external configs
-[ -f "$HOME/.paths" ]     && source "$HOME/.paths"
-[ -f "$HOME/.aliases" ]   && source "$HOME/.aliases"
-[ -f "$HOME/.functions" ] && source "$HOME/.functions"
-
-# completion
-autoload -Uz compinit && compinit
-zstyle ':completion:*' menu select
-
-# prompt
-autoload -Uz vcs_info
-precmd() { vcs_info; export GPG_TTY=$(tty) }
-zstyle ':vcs_info:git:*' formats '%b'
-setopt PROMPT_SUBST
-
-PROMPT='%F{blue}%~%f %F{yellow}${vcs_info_msg_0_}%f
-%F{green}$%f '
-
-# keybindings
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^k" up-line-or-beginning-search
-bindkey "^j" down-line-or-beginning-search
-
 # history (RAM-only)
 HISTSIZE=888888
 SAVEHIST=0
@@ -32,11 +7,41 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 
+# safety
+setopt NO_CLOBBER                              # prevent > overwrite (use >| to force)
+
 # system
 ulimit -n 2048
 
-# safety
-setopt NO_CLOBBER                              # prevent > overwrite (use >| to force)
+# keybindings
+[[ -t 0 ]] && stty -ixon 2>/dev/null || true
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^k" up-line-or-beginning-search
+bindkey "^j" down-line-or-beginning-search
+
+# completion
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
+zstyle ':completion:*' menu select
+
+# prompt
+autoload -Uz vcs_info
+precmd() {
+  vcs_info
+  export GPG_TTY=$(tty)
+  print -Pn "\e]0;N U L L\a"
+  _git_rprompt
+}
+zstyle ':vcs_info:git:*' formats '%b'
+
+PROMPT='%B%F{cyan}%1~%f %(?.%F{green}.%F{red})$❯%f%b '
+
+# source external configs
+[ -f "$HOME/.paths" ]     && source "$HOME/.paths"
+[ -f "$HOME/.aliases" ]   && source "$HOME/.aliases"
+[ -f "$HOME/.functions" ] && source "$HOME/.functions"
 
 # tools
 # fzf

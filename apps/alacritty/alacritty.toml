@@ -1,7 +1,18 @@
 # alacritty config
 
-# theme
-import = ["~/.config/alacritty/themes/pixiefloss.toml"]
+import = ["~/.dotfiles/apps/alacritty/colours.gen.toml"]
+live_config_reload = true
+
+# env
+[env]
+TERM = "xterm-256color"
+
+# window
+[window]
+padding = { x = 10, y = 8 }
+startup_mode = "Maximized"
+opacity = 0.88
+dynamic_title = true
 
 # font
 [font]
@@ -17,28 +28,13 @@ style = "Bold"
 [font.italic]
 style = "Oblique"
 
-# window
-[window]
-padding = { x = 8, y = 8 }
-opacity = 0.81
-dynamic_title = true
-
-# cursor
-[cursor.style]
-shape = "Block"
-blinking = "On"
+# selection
+[selection]
+save_to_clipboard = true
 
 # scrolling
 [scrolling]
 history = 50000
-
-# env
-[env]
-TERM = "xterm-256color"
-
-# selection
-[selection]
-save_to_clipboard = true
 
 # mouse
 [[mouse.bindings]]
@@ -48,3 +44,22 @@ action = "Paste"
 [[mouse.bindings]]
 mouse = "Middle"
 action = "PasteSelection"
+
+[hints]
+alphabet = "jfkdlsahgurieowpq"
+
+[[hints.enabled]]
+regex = "(mailto:|ssh://|https?://|ftp://|file://|www\\.)[\\w\\-@:%.+~#=/?&,;!()]*[\\w\\-@%+~#=/)]"
+hyperlinks = true
+command = { program = "xdg-open", args = [] }
+post_processing = true
+binding = { key = "O", mods = "Control|Shift" }
+
+[hints.enabled.mouse]
+enabled = true
+mods = "Control"
+
+# cursor
+[cursor.style]
+shape = "Block"
+blinking = "On"

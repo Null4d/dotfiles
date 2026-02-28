@@ -32,6 +32,7 @@ alias chown='chown -v'
 alias mkdir='mkdir -pv'
 
 # tmux
+alias null='tmux new -A -s Null'
 alias ta='tmux attach -t'
 alias tn='tmux new -s'
 alias tl='tmux list-sessions'

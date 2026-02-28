@@ -6,10 +6,25 @@ zero trust, zero trace.
 
 ```
 dotfiles/
-├── identity/          # shell, git, gpg, ssh, tmux
-├── apps/              # alacritty, ranger, ripgrep
-├── setup.sh           # symlink deployer
-└── uninstall.sh       # clean removal
+├── identity/          # $ whoami      (shell, git, gpg, ssh, tmux)
+├── apps/              # $ which       (alacritty, ranger, ripgrep)
+├── theme/             # color source + generator
+├── setup.sh           # $ ./setup.sh
+└── uninstall.sh       # $ ./uninstall.sh
+```
+
+## install
+
+```bash
+git clone https://github.com/Null4d/dotfiles ~/dotfiles
+cd ~/dotfiles && ./setup.sh
+exec zsh
+```
+
+## uninstall
+
+```bash
+cd ~/dotfiles && ./uninstall.sh
 ```
 
 ## dependencies
@@ -34,13 +49,13 @@ chsh -s $(which zsh)
 
 ```bash
 # debian/ubuntu
-sudo apt install tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd alacritty
+sudo apt install tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd fontconfig alacritty
 
 # arch
-sudo pacman -S tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd alacritty
+sudo pacman -S tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd fontconfig alacritty
 
 # fedora
-sudo dnf install tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd alacritty
+sudo dnf install tmux fzf ripgrep xclip wl-clipboard rsync ranger curl wget xdg-utils zoxide lsd fontconfig alacritty
 
 # from github/web
 nvim          # https://github.com/neovim/neovim
@@ -48,6 +63,7 @@ delta         # https://github.com/dandavison/delta
 gh            # https://github.com/cli/cli
 gitleaks      # https://github.com/gitleaks/gitleaks
 difftastic    # https://github.com/Wilfred/difftastic
+```
 
 ### languages
 
@@ -62,18 +78,4 @@ bun         # https://bun.sh
 ruby        # https://github.com/rbenv/rbenv (via rbenv)
 lua         # https://luarocks.org
 python      # https://github.com/pyenv/pyenv (via pyenv)
-```
-
-## install
-
-```bash
-git clone https://github.com/Null4d/dotfiles ~/dotfiles
-cd ~/dotfiles && ./setup.sh
-exec zsh
-```
-
-## uninstall
-
-```bash
-cd ~/dotfiles && ./uninstall.sh
 ```

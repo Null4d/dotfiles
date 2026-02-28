@@ -1,5 +1,14 @@
 # zshenv - first file zsh loads
 
+# deduplicate PATH across shells
+typeset -U PATH path
+
+# locale
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export DOTFILES="$HOME/dotfiles"
+
 # xdg base dirs
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -12,8 +21,10 @@ export VISUAL="nvim"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export DELTA_PAGER="less -FRX"
 
-# deduplicate PATH across shells
-typeset -U PATH path
+# security
+umask 077
+export SSH_ASKPASS=""
+export SSH_ASKPASS_REQUIRE="never"
 
 # history (zero disk trace)
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
@@ -29,12 +40,5 @@ export PSQL_HISTORY="/dev/null"
 export REDISCLI_HISTFILE="/dev/null"
 export GDBHISTFILE=""
 export R2_HISTORY="/dev/null"
-
-# locale
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# security
-umask 077
-export SSH_ASKPASS=""
-export SSH_ASKPASS_REQUIRE="never"
+export ZSH_COMPDUMP="/dev/null"
+export NVIM_LOG_FILE="/dev/null"
