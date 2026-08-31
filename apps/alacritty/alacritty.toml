@@ -1,6 +1,10 @@
 # alacritty config
 
-import = ["~/.dotfiles/apps/alacritty/colours.gen.toml"]
+[general]
+import = [
+  "~/.dotfiles/apps/alacritty/colours.gen.toml",
+  "~/.cache/dotfiles/alacritty-host.toml",
+]
 live_config_reload = true
 
 # env
@@ -63,3 +67,8 @@ mods = "Control"
 [cursor.style]
 shape = "Block"
 blinking = "On"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

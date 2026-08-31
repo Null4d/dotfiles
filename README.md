@@ -27,6 +27,10 @@ exec zsh
 cd ~/dotfiles && ./uninstall.sh
 ```
 
+## theme
+
+`theme null|host` switches Alacritty and tmux between Null4d and host colours.
+
 ## dependencies
 
 ### core

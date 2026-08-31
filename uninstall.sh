@@ -45,6 +45,14 @@ unlink "$HOME/.ssh/config"
 unlink "$HOME/.tmux.conf"
 unlink "$HOME/.local/bin/git-status"
 
+# theme
+theme_unit="$HOME/.config/systemd/user/alacritty-theme-sync.service"
+if [[ -L "$theme_unit" ]] && [[ "$(readlink -- "$theme_unit")" == "$_dotfiles/"* ]]; then
+  "$_dotfiles/theme/alacritty" stop
+fi
+unlink "$HOME/.local/bin/theme"
+unlink "$theme_unit"
+
 # alacritty
 unlink "$HOME/.config/alacritty/alacritty.toml"
 

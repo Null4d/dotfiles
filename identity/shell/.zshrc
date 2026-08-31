@@ -12,6 +12,7 @@ setopt NO_CLOBBER                              # prevent > overwrite (use >| to 
 
 # system
 ulimit -n 2048
+ulimit -c 0
 
 # keybindings
 [[ -t 0 ]] && stty -ixon 2>/dev/null || true
@@ -27,14 +28,11 @@ autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 zstyle ':completion:*' menu select
 
 # prompt
-autoload -Uz vcs_info
 precmd() {
-  vcs_info
   export GPG_TTY=$(tty)
   print -Pn "\e]0;N U L L\a"
   _git_rprompt
 }
-zstyle ':vcs_info:git:*' formats '%b'
 
 PROMPT='%B%F{cyan}%1~%f %(?.%F{green}.%F{red})$❯%f%b '
 

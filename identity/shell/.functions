@@ -1,10 +1,14 @@
 # functions
 
+typeset -gi _nerd_font=-1
+
 _git_rprompt() {
-  [[ -z "$TMUX" && -n "$vcs_info_msg_0_" ]] || { RPROMPT=""; return; }
-  local nerd=0
-  command -v fc-list >/dev/null 2>&1 && fc-list : family | grep -qi "nerd" && nerd=1
-  RPROMPT=$("$DOTFILES/identity/shell/git-status" . zsh "$nerd")
+  [[ -z "$TMUX" ]] || { RPROMPT=""; return; }
+  if (( _nerd_font < 0 )); then
+    _nerd_font=0
+    command -v fc-list >/dev/null 2>&1 && fc-list : family | grep -qi "nerd" && _nerd_font=1
+  fi
+  RPROMPT=$("$DOTFILES/identity/shell/git-status" . zsh "$_nerd_font")
 }
 
 # mkdir and cd
@@ -31,7 +35,8 @@ vault() {
   [[ ! -e "$v" || -d "$v" ]] || { echo "  error: vault path is not directory" >&2; return 1; }
   mkdir -p -m 700 "$v" || { echo "  error: cannot create vault" >&2; return 1; }
   ulimit -c 0
-  nvim() { command nvim --cmd "set noswapfile noundofile nobackup" "$@"; }
+  # keep shada off disk
+  nvim() { command nvim -i NONE --cmd "set noswapfile noundofile nobackup" "$@"; }
   cd "$v" || { echo "  error: cannot enter vault" >&2; return 1; }
   echo "  vault open: $v"
 }
@@ -41,8 +46,9 @@ vault-close() {
   [[ "$v" == /dev/shm/vault-* ]] || { echo "  error: unsafe vault path" >&2; return 1; }
   [[ ! -L "$v" ]] || { echo "  error: vault path is symlink" >&2; return 1; }
   [[ -d "$v" ]] || { echo "  no vault open"; return 0; }
+  # batch mode propagates shred failures
   local shred_fail=0
-  find "$v" -type f -exec shred -u {} \; 2>/dev/null || shred_fail=1
+  find "$v" -type f -exec shred -u -- {} + 2>/dev/null || shred_fail=1
   [[ $shred_fail -ne 0 ]] && echo "  warning: shred failed on some files" >&2
   command rm -rf -- "$v"
   if [[ -d "$v" ]]; then

@@ -35,3 +35,6 @@ ForwardX11Trusted no
 HostbasedAuthentication no
 Tunnel no
 PermitLocalCommand no
+
+# local hosts
+Include ~/.ssh/config.local

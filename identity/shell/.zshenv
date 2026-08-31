@@ -2,12 +2,13 @@
 
 # deduplicate PATH across shells
 typeset -U PATH path
+path=("$HOME/.local/bin" $path)
 
 # locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export DOTFILES="$HOME/dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 
 # xdg base dirs
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -25,9 +26,10 @@ export DELTA_PAGER="less -FRX"
 umask 077
 export SSH_ASKPASS=""
 export SSH_ASKPASS_REQUIRE="never"
+export TPM2_PKCS11_STORE="$HOME/.tpm2_pkcs11"
 
 # history (zero disk trace)
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export HISTFILE="/dev/null"
 export HISTSIZE=0                              # .zshrc overrides for RAM recall
 export SAVEHIST=0
 export LESSHISTFILE="/dev/null"
@@ -42,3 +44,7 @@ export GDBHISTFILE=""
 export R2_HISTORY="/dev/null"
 export ZSH_COMPDUMP="/dev/null"
 export NVIM_LOG_FILE="/dev/null"
+export _ZO_EXCLUDE_DIRS="/dev/shm/*"
+
+# telemetry
+export DO_NOT_TRACK=1

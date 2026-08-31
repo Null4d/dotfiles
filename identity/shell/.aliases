@@ -39,7 +39,7 @@ alias tl='tmux list-sessions'
 alias tk='tmux kill-session -t'
 
 # network
-alias wget='wget --no-hsts'
+alias wget='wget --hsts-file="${XDG_RUNTIME_DIR:-/tmp}/wget-hsts"'
 alias myip='curl -4 -s ifconfig.co'
 alias ports='ss -tulnp'
 
